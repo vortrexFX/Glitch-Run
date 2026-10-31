@@ -492,7 +492,12 @@ function maybeStartPvpMatch(){
 
 function beginPvpCombat(){
  pvpOriginalWeapon=selectedWeapon;
- if(localStorage.grPvpWeaponOverride){
+ pvpAdminActive=localStorage.grAdminPvpNext==='1';
+ if(pvpAdminActive){
+  selectedWeapon='ADMIN BLASTER';
+  localStorage.removeItem('grAdminPvpNext');
+  localStorage.removeItem('grPvpWeaponOverride');
+ }else if(localStorage.grPvpWeaponOverride){
   selectedWeapon=localStorage.grPvpWeaponOverride;
   localStorage.removeItem('grPvpWeaponOverride');
  }
@@ -520,6 +525,11 @@ function beginPvpCombat(){
  });
  pvpChannel.on('broadcast',{event:'pvp-hit'},({payload})=>{
   if(!payload||payload.target!==playerName||!combatActive||combatMode!=='1v1')return;
+  if(pvpAdminActive){
+   combatHealth=100;
+   if(pvpChannel)pvpChannel.send({type:'broadcast',event:'pvp-health',payload:{username:playerName,hp:100}});
+   return;
+  }
   combatHealth=Math.max(0,combatHealth-payload.damage);
   if(pvpChannel)pvpChannel.send({type:'broadcast',event:'pvp-health',payload:{username:playerName,hp:combatHealth}});
   if(combatHealth<=0){
@@ -557,6 +567,7 @@ function finishPvpCombat(won){
   selectedWeapon=pvpOriginalWeapon;
   pvpOriginalWeapon=null;
  }
+ pvpAdminActive=false;
  combatMode='';
  show(over);snd(won?900:130,.3,won?'triangle':'sawtooth');
 }
@@ -665,47 +676,54 @@ function bossAttack(){
 // ULTIMATE UPDATE: PLAYER XP, LEVELS, AND WEAPON ARMORY.
 const weaponDefs = [
  {name:'Starter Pistol',cat:'HANDGUN',level:1,damage:18,rate:0.38},
- {name:'Burst Pistol',cat:'HANDGUN',level:2,damage:22,rate:0.42},
- {name:'Heavy Revolver',cat:'HANDGUN',level:4,damage:42,rate:0.65},
- {name:'Auto Pistol',cat:'HANDGUN',level:7,damage:14,rate:0.13},
- {name:'Magnum X',cat:'HANDGUN',level:12,damage:65,rate:0.8},
+ {name:'Burst Pistol',cat:'HANDGUN',level:5,damage:22,rate:0.42},
+ {name:'Heavy Revolver',cat:'HANDGUN',level:15,damage:42,rate:0.65},
+ {name:'Auto Pistol',cat:'HANDGUN',level:25,damage:14,rate:0.13},
+ {name:'Magnum X',cat:'HANDGUN',level:40,damage:65,rate:0.8},
 
- {name:'Pulse AR',cat:'AR',level:3,damage:24,rate:0.19},
- {name:'Ranger AR',cat:'AR',level:6,damage:28,rate:0.17},
- {name:'Viper AR',cat:'AR',level:10,damage:23,rate:0.12},
- {name:'Phantom AR',cat:'AR',level:16,damage:34,rate:0.16},
- {name:'Overclock AR',cat:'AR',level:24,damage:38,rate:0.12},
+ {name:'Pulse AR',cat:'AR',level:8,damage:24,rate:0.19},
+ {name:'Ranger AR',cat:'AR',level:18,damage:28,rate:0.17},
+ {name:'Viper AR',cat:'AR',level:30,damage:23,rate:0.12},
+ {name:'Phantom AR',cat:'AR',level:50,damage:34,rate:0.16},
+ {name:'Overclock AR',cat:'AR',level:75,damage:38,rate:0.12},
 
- {name:'Micro SMG',cat:'SMG',level:5,damage:12,rate:0.09},
- {name:'Vector SMG',cat:'SMG',level:8,damage:15,rate:0.075},
- {name:'Cyclone SMG',cat:'SMG',level:13,damage:18,rate:0.08},
- {name:'Spectre SMG',cat:'SMG',level:19,damage:21,rate:0.07},
+ {name:'Micro SMG',cat:'SMG',level:12,damage:12,rate:0.09},
+ {name:'Vector SMG',cat:'SMG',level:25,damage:15,rate:0.075},
+ {name:'Cyclone SMG',cat:'SMG',level:40,damage:18,rate:0.08},
+ {name:'Spectre SMG',cat:'SMG',level:60,damage:21,rate:0.07},
 
- {name:'Street Sweeper',cat:'SHOTGUN',level:9,damage:12,rate:0.65},
- {name:'Thunder Shotgun',cat:'SHOTGUN',level:14,damage:19,rate:0.8},
- {name:'Riot Shotgun',cat:'SHOTGUN',level:21,damage:24,rate:0.9},
- {name:'Hellstorm Shotgun',cat:'SHOTGUN',level:29,damage:30,rate:0.95},
+ {name:'Street Sweeper',cat:'SHOTGUN',level:20,damage:12,rate:0.65},
+ {name:'Thunder Shotgun',cat:'SHOTGUN',level:40,damage:19,rate:0.8},
+ {name:'Riot Shotgun',cat:'SHOTGUN',level:65,damage:24,rate:0.9},
+ {name:'Hellstorm Shotgun',cat:'SHOTGUN',level:90,damage:30,rate:0.95},
 
- {name:'Longshot',cat:'SNIPER',level:11,damage:85,rate:1.1},
- {name:'Frostbite Sniper',cat:'SNIPER',level:17,damage:110,rate:1.25},
- {name:'Rail Sniper',cat:'SNIPER',level:25,damage:145,rate:1.4},
- {name:'Void Piercer',cat:'SNIPER',level:35,damage:190,rate:1.6},
+ {name:'Longshot',cat:'SNIPER',level:30,damage:85,rate:1.1},
+ {name:'Frostbite Sniper',cat:'SNIPER',level:55,damage:110,rate:1.25},
+ {name:'Rail Sniper',cat:'SNIPER',level:85,damage:145,rate:1.4},
+ {name:'Void Piercer',cat:'SNIPER',level:125,damage:190,rate:1.6},
 
- {name:'Drum LMG',cat:'LMG',level:15,damage:19,rate:0.11},
- {name:'Titan LMG',cat:'LMG',level:22,damage:25,rate:0.13},
- {name:'Juggernaut LMG',cat:'LMG',level:31,damage:31,rate:0.14},
+ {name:'Drum LMG',cat:'LMG',level:35,damage:19,rate:0.11},
+ {name:'Titan LMG',cat:'LMG',level:65,damage:25,rate:0.13},
+ {name:'Juggernaut LMG',cat:'LMG',level:100,damage:31,rate:0.14},
 
- {name:'Arc Blaster',cat:'SPECIAL',level:18,damage:45,rate:0.4},
- {name:'Plasma Cannon',cat:'SPECIAL',level:27,damage:95,rate:0.9},
- {name:'Glitch Launcher',cat:'SPECIAL',level:33,damage:125,rate:1.0},
- {name:'Singularity',cat:'SPECIAL',level:40,damage:220,rate:1.5},
- {name:'System Breaker',cat:'SPECIAL',level:50,damage:300,rate:1.8}
+ {name:'Arc Blaster',cat:'SPECIAL',level:50,damage:45,rate:0.4},
+ {name:'Plasma Cannon',cat:'SPECIAL',level:90,damage:95,rate:0.9},
+ {name:'Glitch Launcher',cat:'SPECIAL',level:130,damage:125,rate:1.0},
+ {name:'Singularity',cat:'SPECIAL',level:180,damage:220,rate:1.5},
+ {name:'System Breaker',cat:'SPECIAL',level:250,damage:300,rate:1.8}
 ];
 
 let playerXP = Math.max(0, Number(localStorage.grPlayerXP || 0));
 let playerLevel = Math.max(1, Math.floor(playerXP / 250) + 1);
 let selectedWeapon = localStorage.grWeapon || 'Starter Pistol';
+const savedWeaponDef = weaponDefs.find(w => w.name === selectedWeapon);
+if (!savedWeaponDef || playerLevel < savedWeaponDef.level) {
+ selectedWeapon = 'Starter Pistol';
+ localStorage.grWeapon = selectedWeapon;
+}
+
 let pvpOriginalWeapon = null;
+let pvpAdminActive = false;
 
 function refreshPlayerProgress(){
  playerLevel = Math.max(1, Math.floor(playerXP / 250) + 1);
@@ -740,7 +758,11 @@ function redeemGameCode(){
  const input=$('redeemCodeInput');
  const status=$('redeemCodeStatus');
  const code=input.value.trim();
- if(code==='0099'){
+ if(code==='CODE'){
+  localStorage.grAdminPvpNext='1';
+  localStorage.removeItem('grPvpWeaponOverride');
+  status.textContent='🔥 ADMIN MODE RESERVED! One-shot weapon + infinite health for your next 1v1!';
+ }else if(code==='0099'){
   localStorage.grDoubleXpNextGame='1';
   status.textContent='✅ Double XP activated for your next completed game!';
  }else if(code==='2013'){
@@ -1023,14 +1045,18 @@ function endJoystick(e){if(joystick&&e.pointerId===joystick.id)joystick=null}
 c.addEventListener('pointerup',endJoystick);c.addEventListener('pointercancel',endJoystick);c.addEventListener('lostpointercapture',endJoystick);
 function fireCombatWeapon(){
  if(!combatActive||!running||combatFireCooldown>0)return;
- const weapon=weaponDefs.find(w=>w.name===selectedWeapon)||weaponDefs[0];
+ const weapon=pvpAdminActive
+  ?{name:'ADMIN BLASTER',cat:'SPECIAL',damage:99999,rate:0.25}
+  :(weaponDefs.find(w=>w.name===selectedWeapon)||weaponDefs[0]);
  combatFireCooldown=weapon.rate;
  const speed=weapon.cat==='SNIPER'?760:weapon.cat==='SHOTGUN'?470:620;
  const count=weapon.cat==='SHOTGUN'?6:weapon.cat==='SPECIAL'?2:1;
  for(let i=0;i<count;i++){
   const spread=count===1?0:(i-(count-1)/2)*.12;
   const a=Math.atan2(combatAim.y,combatAim.x)+spread;
-  const damage=combatMode==='1v1'?Math.max(10,Math.min(38,weapon.damage*.45))/count:weapon.damage/count;
+  const damage=combatMode==='1v1'
+   ?(pvpAdminActive?99999:Math.max(10,Math.min(38,weapon.damage*.45))/count)
+   :weapon.damage/count;
   const bullet={x:p.x+combatAim.x*15,y:p.y+combatAim.y*15,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,damage,life:1.4,owner:playerName,team:'blue'};
   combatBullets.push(bullet);
   if(combatMode==='1v1'&&pvpChannel)pvpChannel.send({type:'broadcast',event:'pvp-shot',payload:{username:playerName,x:bullet.x/W,y:bullet.y/H,vx:bullet.vx/W,vy:bullet.vy/H,damage:bullet.damage}});
