@@ -62,7 +62,7 @@ button:disabled{opacity:.35;cursor:not-allowed}.row{display:flex;justify-content
 <button class="primary" id="start">START BOSS RUN</button><div class="row"><button id="rankedStart">🏅 RANKED FREE PLAY</button><button id="menuFreePlay" class="hidden">FREE PLAY MODE</button></div>
 <div class="small" id="rankRecord">RANKED PERSONAL BEST: ROOKIE · 0:00</div><div class="small">Ranked Free Play: survive as long as possible to climb from Rookie to Glitch God. No bosses and no ranked leaderboard.<br>Move: WASD / arrows · Dash: LEFT SHIFT · Jump: SPACE (dodge projectiles) · Shield: E · Mobile: touch anywhere to open the floating joystick · move your thumb a little inside the circle · use touch buttons for Dash / Jump / Shield<br>Random ability drops appear occasionally. Collect one for a 30-second power-up!</div>
 </div>
-<div class="panel hidden" id="profilePanel"><h1>PROFILE</h1><div class="tag">YOUR PLAYER ID & SETTINGS</div><div id="profilePreview" class="card" style="text-align:center"></div><p>Username</p><div class="row"><input id="profileInput" maxlength="16" placeholder="Pick a username" autocomplete="off"><button id="saveProfile">SAVE</button></div><div class="row"><button id="bannerShopBtn">🏷️ BANNER SHOP</button></div><div class="card"><b>SETTINGS</b><div class="row"><label><input type="checkbox" id="soundSetting" style="accent-color:#65f7ff"> Sound effects</label></div><div class="small">Turn game sound effects on or off. Your choice is saved.</div></div><button id="profileBack">BACK TO MENU</button></div>
+<div class="panel hidden" id="profilePanel"><h1>PROFILE</h1><div class="tag">YOUR PLAYER ID & SETTINGS</div><div id="profilePreview" class="card" style="text-align:center"></div><p>Username</p><div class="row"><input id="profileInput" maxlength="16" placeholder="Pick a username" autocomplete="off"><button id="saveProfile">SAVE</button></div><div class="row"><button id="bannerShopBtn">🏷️ BANNER SHOP</button></div><div class="card"><b>SETTINGS</b><div class="row"><label><input type="checkbox" id="soundSetting" style="accent-color:#65f7ff"> Sound effects</label></div><div class="small">Turn game sound effects on or off. Your choice is saved.</div></div><div class="card"><b>🎟️ REDEEM CODE</b><div class="row"><input id="redeemCodeInput" maxlength="20" placeholder="Enter code" autocomplete="off"><button id="redeemCodeBtn">REDEEM</button></div><div class="small" id="redeemCodeStatus">Enter a code to unlock a reward.</div></div><button id="profileBack">BACK TO MENU</button></div>
 <div class="panel hidden" id="bannerShop"><h1>BANNER SHOP</h1><div class="tag">BUY A BANNER WITH SKIN CREDITS</div><div id="bannerItems"></div><p id="bannerWallet"></p><button id="bannerBack">BACK</button></div>
 <div class="panel hidden" id="shop"><h1>SKIN SHOP</h1><div class="tag">31 SKINS · SPEND SKIN CREDITS</div><div id="shopItems"></div><p id="wallet"></p><button id="shopBack">BACK</button></div>
 <div class="panel hidden" id="upgrades"><h1>UPGRADE CENTER</h1><div class="tag">UPGRADE CREDITS · PERMANENT POWER-UPS</div><div id="upgradeItems"></div><div class="card"><b>💖 REVIVE TOKEN</b><br><span style="color:#91a7bd">Come back once after getting hit in a run. Works in Boss Run, Free Play, and Ranked Free Play.</span><p id="reviveStock">Owned: 0</p><button id="buyReviveUpgrade">BUY 1 · 500 UPGRADE CREDITS</button> <button id="buyReviveSkin">BUY 1 · 500 SKIN CREDITS</button></div><p id="upgradeWallet"></p><p id="skinWalletInUpgrades"></p><button id="upgradeBack">BACK</button></div>
@@ -157,7 +157,8 @@ const skins=[
 {id:'starlord',name:'Star Lord',cost:40000,color:'#ffe88a'},
 {id:'glitchgod',name:'GLITCH GOD',cost:50000,color:'#ffffff'},
 {id:'overlord',name:'OVERLORD',cost:75000,color:'#ff005d'},
-{id:'singularity',name:'SINGULARITY',cost:100000,color:'#8b5cff'}
+{id:'singularity',name:'SINGULARITY',cost:100000,color:'#8b5cff'},
+{id:'pumpkin',name:'🎃 Pumpkin',cost:0,color:'#ff8c24'}
 ];
 let unlocked=JSON.parse(localStorage.grUnlocked||'["cyan"]');
 const upgradeDefs=[
@@ -490,6 +491,11 @@ function maybeStartPvpMatch(){
 }
 
 function beginPvpCombat(){
+ pvpOriginalWeapon=selectedWeapon;
+ if(localStorage.grPvpWeaponOverride){
+  selectedWeapon=localStorage.grPvpWeaponOverride;
+  localStorage.removeItem('grPvpWeaponOverride');
+ }
  combatActive=true;combatMode='1v1';combatHealth=100;combatKills=0;combatDeaths=0;
  combatBullets.length=0;combatFireCooldown=0;combatMouseDown=false;combatBots.length=0;
  const first=playerName.toLowerCase()<livePartyFriend.toLowerCase();
@@ -546,7 +552,12 @@ function finishPvpCombat(won){
  $('earned').textContent='1v1 wins: '+(localStorage.gr1v1Wins||0)+' · Losses: '+(localStorage.gr1v1Losses||0)+' · XP earned: '+earned;
  $('again').textContent='BACK TO PARTY';
  $('again').onclick=()=>{show($('partyPanel'));updateProfileDisplay()};
- pvpRemote=null;combatMode='';
+ pvpRemote=null;
+ if(pvpOriginalWeapon!==null){
+  selectedWeapon=pvpOriginalWeapon;
+  pvpOriginalWeapon=null;
+ }
+ combatMode='';
  show(over);snd(won?900:130,.3,won?'triangle':'sawtooth');
 }
 
@@ -555,7 +566,9 @@ $('buyReviveUpgrade').onclick=()=>{if(upgradeCoins<500)return;upgradeCoins-=500;
 $('buyReviveSkin').onclick=()=>{if(skinCoins<500)return;skinCoins-=500;reviveTokens++;localStorage.grSkinCoins=skinCoins;localStorage.grReviveTokens=reviveTokens;snd(760,.12,'triangle');openUpgrades()};
 $('reviveNow').onclick=()=>{if(!pendingRevive||reviveTokens<1)return;$('mobileControls').classList.add('active');reviveTokens--;localStorage.grReviveTokens=reviveTokens;pendingRevive=false;running=true;invuln=3;shield=1.5;show(menu);overlay.classList.add('hidden');hud.classList.remove('hidden');abilityHud.classList.remove('hidden');if(rankedMode)$('rankHud').classList.remove('hidden');pop(p.x,p.y-30,'REVIVED!','#ff8bd2');burst(p.x,p.y,'#ff8bd2',28);snd(900,.22,'triangle')};
 $('giveUp').onclick=()=>{pendingRevive=false;finish()};
-$('profileCorner').onclick=()=>{updateProfileDisplay();$('soundSetting').checked=localStorage.grSoundEnabled!=='0';show($('profilePanel'))};$('profileBack').onclick=()=>show(menu);$('soundSetting').onchange=e=>{localStorage.grSoundEnabled=e.target.checked?'1':'0';$('toast').textContent=e.target.checked?'SOUND EFFECTS ON':'SOUND EFFECTS OFF'};$('saveProfile').onclick=savePlayerName;$('bannerShopBtn').onclick=()=>openBannerShop();$('bannerBack').onclick=()=>show($('profilePanel'));$('shopBtn').onclick=openShop;$('upgradeBtn').onclick=openUpgrades;$('boardBtn').onclick=openBoard;$('shopBack').onclick=()=>show(menu);$('upgradeBack').onclick=()=>show(menu);$('boardBack').onclick=()=>show(menu);$('boardRefresh').onclick=loadGlobalBoard;$('partyBtn').onclick=async()=>{show($('partyPanel'));await refreshParty()};$('partyBack').onclick=()=>show(menu);$('partyRefresh').onclick=refreshParty;$('sendPartyRequest').onclick=sendPartyInvite;$('joinLiveParty').onclick=async()=>{
+$('profileCorner').onclick=()=>{updateProfileDisplay();$('soundSetting').checked=localStorage.grSoundEnabled!=='0';show($('profilePanel'))};$('profileBack').onclick=()=>show(menu);$('soundSetting').onchange=e=>{localStorage.grSoundEnabled=e.target.checked?'1':'0';$('toast').textContent=e.target.checked?'SOUND EFFECTS ON':'SOUND EFFECTS OFF'};$('redeemCodeBtn').onclick=redeemGameCode;
+$('redeemCodeInput').addEventListener('keydown',e=>{if(e.key==='Enter')redeemGameCode()});
+$('saveProfile').onclick=savePlayerName;$('bannerShopBtn').onclick=()=>openBannerShop();$('bannerBack').onclick=()=>show($('profilePanel'));$('shopBtn').onclick=openShop;$('upgradeBtn').onclick=openUpgrades;$('boardBtn').onclick=openBoard;$('shopBack').onclick=()=>show(menu);$('upgradeBack').onclick=()=>show(menu);$('boardBack').onclick=()=>show(menu);$('boardRefresh').onclick=loadGlobalBoard;$('partyBtn').onclick=async()=>{show($('partyPanel'));await refreshParty()};$('partyBack').onclick=()=>show(menu);$('partyRefresh').onclick=refreshParty;$('sendPartyRequest').onclick=sendPartyInvite;$('joinLiveParty').onclick=async()=>{
   $('partyStatus').textContent='JOIN BUTTON CLICKED — starting connection...';
   try{
     await startLivePartyRun();
@@ -692,6 +705,7 @@ const weaponDefs = [
 let playerXP = Math.max(0, Number(localStorage.grPlayerXP || 0));
 let playerLevel = Math.max(1, Math.floor(playerXP / 250) + 1);
 let selectedWeapon = localStorage.grWeapon || 'Starter Pistol';
+let pvpOriginalWeapon = null;
 
 function refreshPlayerProgress(){
  playerLevel = Math.max(1, Math.floor(playerXP / 250) + 1);
@@ -705,7 +719,12 @@ function refreshPlayerProgress(){
 }
 
 function awardPlayerXP(amount){
- const gained = Math.max(0, Math.floor(amount));
+ let gained = Math.max(0, Math.floor(amount));
+ if(localStorage.grDoubleXpNextGame==='1'){
+  gained*=2;
+  localStorage.removeItem('grDoubleXpNextGame');
+  $('toast').textContent='✨ DOUBLE XP CODE ACTIVATED!';
+ }
  const oldLevel = playerLevel;
  playerXP += gained;
  localStorage.grPlayerXP = playerXP;
@@ -715,6 +734,39 @@ function awardPlayerXP(amount){
   snd(900,.25,'triangle',.05);
  }
  $('weaponStatus').textContent = `+${gained} XP earned!`;
+}
+
+function redeemGameCode(){
+ const input=$('redeemCodeInput');
+ const status=$('redeemCodeStatus');
+ const code=input.value.trim();
+ if(code==='0099'){
+  localStorage.grDoubleXpNextGame='1';
+  status.textContent='✅ Double XP activated for your next completed game!';
+ }else if(code==='2013'){
+  const nl=String.fromCharCode(10);
+  const choices=weaponDefs.map((w,i)=>(i+1)+'. '+w.name).join(nl);
+  const answer=prompt('Choose any weapon for your next 1v1:'+nl+nl+choices+nl+nl+'Enter its number:');
+  if(answer===null)return;
+  const index=Number(answer)-1;
+  if(!Number.isInteger(index)||index<0||index>=weaponDefs.length){
+   status.textContent='Invalid weapon number. Try again.';
+   return;
+  }
+  localStorage.grPvpWeaponOverride=weaponDefs[index].name;
+  status.textContent='✅ '+weaponDefs[index].name+' reserved for your next 1v1 only!';
+ }else if(code==='51255'){
+  if(!unlocked.includes('pumpkin'))unlocked.push('pumpkin');
+  localStorage.grUnlocked=JSON.stringify(unlocked);
+  skin='pumpkin';
+  localStorage.grSkin='pumpkin';
+  updateSelectors();
+  updateProfileDisplay();
+  status.textContent='🎃 Pumpkin skin unlocked and equipped permanently!';
+ }else{
+  status.textContent='❌ Invalid code. Check the code and try again.';
+ }
+ input.value='';
 }
 
 function renderWeaponArmory(){
@@ -1138,7 +1190,7 @@ if(boss){
 
 if(abilityPickup){const a=abilityPickup,def=a.def;x.save();x.translate(a.x,a.y);x.rotate(Math.sin(a.p)*.18);x.shadowBlur=24;x.shadowColor=def.color;x.fillStyle=def.color;x.beginPath();x.arc(0,0,a.r+Math.sin(a.p*2)*2,0,Math.PI*2);x.fill();x.shadowBlur=0;x.fillStyle='#07101d';x.font='bold 13px system-ui';x.textAlign='center';x.textBaseline='middle';x.fillText(def.icon,0,1);x.restore();x.fillStyle=def.color;x.font='bold 9px system-ui';x.textAlign='center';x.fillText('ABILITY',a.x,a.y-22)}
 for(let i=0;i<p.trail.length;i++){let t=p.trail[i],a=(i+1)/p.trail.length;x.globalAlpha=a*.22;x.fillStyle=color();x.beginPath();x.arc(t.x,t.y,p.r*a,0,7);x.fill()}x.globalAlpha=1;
-if(running){x.save();if((shield>0&&(shield>.7||Math.floor(time*18)%2===0))||activeAbility==='guardian'||activeAbility==='phase'){x.strokeStyle=activeAbility==='guardian'?'#fff0a0':activeAbility==='phase'?'#b9a0ff':'#65f7ff';x.lineWidth=3;x.shadowBlur=25;x.shadowColor=x.strokeStyle;x.beginPath();x.arc(p.x,p.y,22+Math.sin(time*12)*2,0,7);x.stroke()}const hop=jumpTime>0?Math.sin((1-jumpTime/(activeAbility==='hyperjump'?1.15:.68))*Math.PI)*30:0; if(jumpTime>0){x.globalAlpha=.32;x.fillStyle='#65f7ff';x.beginPath();x.ellipse(p.x,p.y+5,14,5,0,0,7);x.fill();x.globalAlpha=1}x.globalAlpha=invuln>0&&Math.floor(time*20)%2===0?.3:1;x.shadowBlur=25;x.shadowColor=color();x.fillStyle='#f5ffff';x.beginPath();x.arc(p.x,p.y-hop,p.r,0,7);x.fill();x.strokeStyle=jumpTime>0?'#ffffff':color();x.lineWidth=3;x.beginPath();x.arc(p.x,p.y-hop,p.r+4,0,7);x.stroke();x.restore()}
+if(running){x.save();if((shield>0&&(shield>.7||Math.floor(time*18)%2===0))||activeAbility==='guardian'||activeAbility==='phase'){x.strokeStyle=activeAbility==='guardian'?'#fff0a0':activeAbility==='phase'?'#b9a0ff':'#65f7ff';x.lineWidth=3;x.shadowBlur=25;x.shadowColor=x.strokeStyle;x.beginPath();x.arc(p.x,p.y,22+Math.sin(time*12)*2,0,7);x.stroke()}const hop=jumpTime>0?Math.sin((1-jumpTime/(activeAbility==='hyperjump'?1.15:.68))*Math.PI)*30:0; if(jumpTime>0){x.globalAlpha=.32;x.fillStyle='#65f7ff';x.beginPath();x.ellipse(p.x,p.y+5,14,5,0,0,7);x.fill();x.globalAlpha=1}x.globalAlpha=invuln>0&&Math.floor(time*20)%2===0?.3:1;x.shadowBlur=25;x.shadowColor=color();x.fillStyle=skin==='pumpkin'?'#ff8c24':'#f5ffff';x.beginPath();x.arc(p.x,p.y-hop,p.r,0,7);x.fill();x.strokeStyle=jumpTime>0?'#ffffff':color();x.lineWidth=3;x.beginPath();x.arc(p.x,p.y-hop,p.r+4,0,7);x.stroke();x.restore()}
 if(remotePlayer&&livePartyActive){x.save();const rx=Math.max(12,Math.min(W-12,remoteRender?remoteRender.x:Number(remotePlayer.x)||W/2)),ry=Math.max(12,Math.min(H-12,remoteRender?remoteRender.y:Number(remotePlayer.y)||H/2));x.shadowBlur=25;x.shadowColor=remotePlayer.skinColor||'#ff8bd2';x.fillStyle='#fff';x.beginPath();x.arc(rx,ry,11,0,Math.PI*2);x.fill();x.strokeStyle=remotePlayer.skinColor||'#ff8bd2';x.lineWidth=4;x.beginPath();x.arc(rx,ry,15,0,Math.PI*2);x.stroke();x.shadowBlur=0;x.fillStyle='#fff';x.font='bold 11px system-ui';x.textAlign='center';x.fillText(String(remotePlayer.username||'FRIEND').toUpperCase(),rx,ry-23);x.fillStyle='#91a7bd';x.font='10px system-ui';x.fillText('SCORE '+(Number(remotePlayer.score)||0),rx,ry+29);x.restore()}
 if(joystick){x.save();x.globalAlpha=.78;x.lineWidth=2;x.strokeStyle='#65f7ff';x.fillStyle='#65f7ff18';x.beginPath();x.arc(joystick.x,joystick.y,joystickRadius,0,Math.PI*2);x.fill();x.stroke();x.globalAlpha=.95;x.fillStyle='#65f7ff55';x.strokeStyle='#dfffff';x.beginPath();x.arc(joystick.knobX,joystick.knobY,20,0,Math.PI*2);x.fill();x.stroke();x.restore()}
 for(let a of particles){x.globalAlpha=Math.max(0,a.life/a.max);x.fillStyle=a.col;x.beginPath();x.arc(a.x,a.y,a.r,0,7);x.fill()}x.globalAlpha=1;for(let t of texts){x.globalAlpha=Math.max(0,t.life);x.fillStyle=t.col;x.font='bold 14px system-ui';x.textAlign='center';x.fillText(t.str,t.x,t.y)}x.globalAlpha=1}
