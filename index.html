@@ -41,19 +41,21 @@ button:disabled{opacity:.35;cursor:not-allowed}.row{display:flex;justify-content
 <p>Collect shards, dodge the corrupted enemies, and build your score. Spend shards earned across runs to unlock new looks.</p>
 <div class="card" style="text-align:center"><div id="playerTag"><span id="playerBanner">STARTER</span><span id="playerNameDisplay">CHOOSE A USERNAME</span></div><div class="small">Your profile is saved on this device. Use the PROFILE button in the corner to change it or adjust settings.</div></div>
 <div class="row"><label class="pill">MAP <select id="mapSelect"><option value="0">Neon Grid</option><option value="1">Violet Void</option><option value="2">Toxic Circuit</option><option value="3">Crimson Core</option><option value="4">Frostbyte</option><option value="5">Golden Temple</option><option value="6">Deep Space</option><option value="7">Inferno Zone</option><option value="8">Cyber City</option></select></label><label class="pill">SKIN <select id="skinSelect"></select></label></div>
-<div class="row"><button id="shopBtn">SKIN SHOP</button><button id="upgradeBtn">UPGRADE CENTER</button><button id="boardBtn">LEADERBOARD</button></div>
+<div class="row"><button id="shopBtn">SKIN SHOP</button><button id="upgradeBtn">UPGRADE CENTER</button><button id="boardBtn">LEADERBOARD</button><button id="partyBtn">👥 FRIENDS PARTY</button></div>
 <button class="primary" id="start">START BOSS RUN</button><div class="row"><button id="rankedStart">🏅 RANKED FREE PLAY</button><button id="menuFreePlay" class="hidden">FREE PLAY MODE</button></div>
-<div class="small" id="rankRecord">RANKED PERSONAL BEST: ROOKIE · 0:00</div><div class="small">Ranked Free Play: survive as long as possible to climb from Rookie to Glitch God. No bosses and no ranked leaderboard.<br>Move: WASD / arrows · Dash: LEFT SHIFT · Jump: SPACE (dodge projectiles) · Shield: E · Mobile: drag on the playfield to move · use touch buttons for Dash / Jump / Shield<br>Random ability drops appear occasionally. Collect one for a 30-second power-up!</div>
+<div class="small" id="rankRecord">RANKED PERSONAL BEST: ROOKIE · 0:00</div><div class="small">Ranked Free Play: survive as long as possible to climb from Rookie to Glitch God. No bosses and no ranked leaderboard.<br>Move: WASD / arrows · Dash: LEFT SHIFT · Jump: SPACE (dodge projectiles) · Shield: E · Mobile: touch anywhere to open the floating joystick · move your thumb a little inside the circle · use touch buttons for Dash / Jump / Shield<br>Random ability drops appear occasionally. Collect one for a 30-second power-up!</div>
 </div>
 <div class="panel hidden" id="profilePanel"><h1>PROFILE</h1><div class="tag">YOUR PLAYER ID & SETTINGS</div><div id="profilePreview" class="card" style="text-align:center"></div><p>Username</p><div class="row"><input id="profileInput" maxlength="16" placeholder="Pick a username" autocomplete="off"><button id="saveProfile">SAVE</button></div><div class="row"><button id="bannerShopBtn">🏷️ BANNER SHOP</button></div><div class="card"><b>SETTINGS</b><div class="row"><label><input type="checkbox" id="soundSetting" style="accent-color:#65f7ff"> Sound effects</label></div><div class="small">Turn game sound effects on or off. Your choice is saved.</div></div><button id="profileBack">BACK TO MENU</button></div>
 <div class="panel hidden" id="bannerShop"><h1>BANNER SHOP</h1><div class="tag">BUY A BANNER WITH SKIN CREDITS</div><div id="bannerItems"></div><p id="bannerWallet"></p><button id="bannerBack">BACK</button></div>
 <div class="panel hidden" id="shop"><h1>SKIN SHOP</h1><div class="tag">31 SKINS · SPEND SKIN CREDITS</div><div id="shopItems"></div><p id="wallet"></p><button id="shopBack">BACK</button></div>
 <div class="panel hidden" id="upgrades"><h1>UPGRADE CENTER</h1><div class="tag">UPGRADE CREDITS · PERMANENT POWER-UPS</div><div id="upgradeItems"></div><div class="card"><b>💖 REVIVE TOKEN</b><br><span style="color:#91a7bd">Come back once after getting hit in a run. Works in Boss Run, Free Play, and Ranked Free Play.</span><p id="reviveStock">Owned: 0</p><button id="buyReviveUpgrade">BUY 1 · 500 UPGRADE CREDITS</button> <button id="buyReviveSkin">BUY 1 · 500 SKIN CREDITS</button></div><p id="upgradeWallet"></p><p id="skinWalletInUpgrades"></p><button id="upgradeBack">BACK</button></div>
+<div class="panel hidden" id="partyPanel"><h1>FRIENDS PARTY</h1><div class="tag">INVITE FRIENDS BY GLITCH RUN USERNAME</div><p>Send a party request or check requests sent to you.</p><div class="row"><input id="partyUsername" maxlength="16" placeholder="Friend username" autocomplete="off" style="width:min(230px,65%);padding:10px;border:1px solid #65f7ff66;border-radius:9px;background:#080f20;color:#fff;font-weight:800"><button id="sendPartyRequest" class="primary">SEND REQUEST</button></div><div class="small" id="partyStatus">Connect to the online party service.</div><h3 style="color:#65f7ff">INCOMING REQUESTS</h3><div id="incomingPartyRequests"></div><h3 style="color:#65f7ff">YOUR PARTY</h3><div id="partyMembers" class="card">No accepted party requests yet.</div><p class="small">Both players choose the same friend and press JOIN LIVE RUN. Your characters appear together in the arena in real time. Both players control their own runner; this beta currently simulates hazards separately on each device.</p><button class="primary" id="joinLiveParty">🎮 JOIN LIVE RUN</button><button id="leaveLiveParty">LEAVE PARTY</button><button id="partyRefresh">REFRESH</button><button id="partyBack">BACK</button></div>
 <div class="panel hidden" id="board"><h1>TOP RUNS</h1><div class="tag">GLOBAL LEADERBOARD · ALL PLAYERS</div><div id="scoresList">Loading global scores…</div><p class="small" id="boardStatus">Connecting to the online leaderboard…</p><button id="boardRefresh">REFRESH</button><button id="boardBack">BACK</button></div>
 <div class="panel hidden" id="victory"><h1>🏆 VICTORY!</h1><div class="tag">ALL 10 BOSSES DEFEATED</div><p>You cleared the boss campaign! Free Play is now unlocked.</p><button class="primary" id="victoryFreePlay">ENTER FREE PLAY</button><button id="victoryHome">MAIN MENU</button></div>
 <div class="panel hidden" id="revivePanel"><h1>💖 REVIVE?</h1><div class="tag">ONE MORE CHANCE</div><p>You got hit! Use one of your Revive Tokens to continue this run.</p><p id="reviveModeText"></p><button class="primary" id="reviveNow">USE REVIVE TOKEN</button><button id="giveUp">END RUN</button></div>
 <div class="panel hidden" id="over"><h1>CRASHED</h1><div class="tag">THE GLITCH GOT YOU</div><p id="result"></p><p id="earned"></p><button class="primary" id="again">RUN IT BACK</button><button id="home">MAIN MENU</button></div>
 </div><div id="mobileControls" aria-label="Touch game controls"><div class="mobileGroup"><button id="mobileDash" type="button">⚡<br>DASH</button></div><div class="mobileGroup"><button id="mobileJump" type="button">⬆<br>JUMP</button><button id="mobileShield" type="button">◇<br>SHIELD</button></div></div><div id="toast">GLITCH RUN · REMIX</div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (()=>{
 const c=document.getElementById('game'),x=c.getContext('2d'),wrap=document.getElementById('wrap');
@@ -67,7 +69,8 @@ const oldWallet=+(localStorage.grCoins||0);
 let skinCoins=+(localStorage.grSkinCoins ?? Math.floor(oldWallet/2));
 let upgradeCoins=+(localStorage.grUpgradeCoins ?? Math.ceil(oldWallet/2));
 localStorage.grSkinCoins=skinCoins;localStorage.grUpgradeCoins=upgradeCoins;
-let map=0,skin=localStorage.grSkin||'cyan',dash=0,shield=0,dashCD=0,shieldCD=0,invuln=0,pointer=null,shake=0,lives=0;
+let map=0,skin=localStorage.grSkin||'cyan',dash=0,shield=0,dashCD=0,shieldCD=0,invuln=0,joystick=null,shake=0,lives=0;
+const joystickRadius=54;
 let jumpTime=0,jumpCD=0;
 let abilityPickup=null,abilitySpawnTimer=rand(30,45),activeAbility='',activeAbilityTime=0;
 let boss=null,bossesDefeated=0,nextBossAt=35,bossHitCooldown=0,freePlay=false,rankedMode=false;
@@ -138,6 +141,9 @@ function upgradeCost(def){return Math.floor(def.base*Math.pow(level(def.id)+1,1.
 
 const maps=[{name:'NEON GRID',bg:'#090d1c',grid:'#8bb8d41a',glow:'#16304a'},{name:'VIOLET VOID',bg:'#10091d',grid:'#bd8bff1c',glow:'#31194c'},{name:'TOXIC CIRCUIT',bg:'#09170f',grid:'#9aff741a',glow:'#173d25'},{name:'CRIMSON CORE',bg:'#1b080d',grid:'#ff63751c',glow:'#511526'},{name:'FROSTBYTE',bg:'#071724',grid:'#7de7ff20',glow:'#16465d'},{name:'GOLDEN TEMPLE',bg:'#1b1608',grid:'#ffe08a20',glow:'#554018'},{name:'DEEP SPACE',bg:'#080817',grid:'#9c8cff20',glow:'#252052'},{name:'INFERNO ZONE',bg:'#1b0b05',grid:'#ff9a4a20',glow:'#59200c'},{name:'CYBER CITY',bg:'#071b1b',grid:'#5dffe020',glow:'#104c4a'}];
 const p={x:450,y:300,r:11,speed:260,trail:[]};
+let liveChannel=null,livePartyFriend='',livePartyRoom='',remotePlayer=null,lastLiveSend=0,livePartyActive=false,liveStartPending=false;let remoteTarget=null,remoteRender=null;
+let lastWorldSend=0,orbSerial=0,pendingOrbCollections=new Set();
+function liveIsHost(){return !livePartyActive||playerName.toLowerCase()<livePartyFriend.toLowerCase()}
 let audio=null;
 function resize(){let r=wrap.getBoundingClientRect();W=r.width;H=r.height;dpr=Math.min(devicePixelRatio||1,1.5);c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);if(!running){p.x=W/2;p.y=H/2}}window.addEventListener('resize',resize);resize();
 function snd(f=500,d=.08,w='sine',v=.035){if(localStorage.grSoundEnabled==='0')return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();let o=audio.createOscillator(),g=audio.createGain();o.type=w;o.frequency.setValueAtTime(f,audio.currentTime);if(w==='sine')o.frequency.exponentialRampToValueAtTime(Math.max(50,f*.55),audio.currentTime+d);g.gain.setValueAtTime(Math.min(v * 5, .45),audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+d);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+d)}catch(e){}}
@@ -180,7 +186,7 @@ function pickupSound() {
 function rand(a,b){return a+Math.random()*(b-a)}function color(){return skins.find(s=>s.id===skin)?.color||'#65f7ff'}
 function burst(px,py,col,n=12){for(let i=0;i<n;i++){let a=rand(0,Math.PI*2),v=rand(55,220);particles.push({x:px,y:py,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:rand(.25,.7),max:.7,col,r:rand(1.5,4)})}}
 function pop(px,py,str,col){texts.push({x:px,y:py,str,col,life:.8})}
-function show(which){[menu,shop,$('profilePanel'),$('bannerShop'),upgradesPanel,board,over,victory,$('revivePanel')].forEach(e=>e.classList.add('hidden')); which.classList.remove('hidden');overlay.classList.remove('hidden')}
+function show(which){[menu,shop,$('profilePanel'),$('bannerShop'),upgradesPanel,board,$('partyPanel'),over,victory,$('revivePanel')].forEach(e=>e.classList.add('hidden')); which.classList.remove('hidden');overlay.classList.remove('hidden')}
 function updateProfileDisplay(){const def=bannerDefs.find(b=>b.id===equippedBanner)||bannerDefs[0];$('playerNameDisplay').textContent=playerName||'CHOOSE A USERNAME';$('playerBanner').textContent=def.name;$('playerBanner').style.background=def.bg;$('playerBanner').style.color=def.fg;$('profileInput').value=playerName;$('profilePreview').innerHTML=`<span style="display:inline-block;padding:5px 9px;border-radius:6px;background:${def.bg};color:${def.fg};font-weight:1000">${def.name}</span> <b>${playerName||'NO USERNAME YET'}</b>`;}
 function requireUsername(){if(playerName.trim().length<3){show($('profilePanel'));$('profileInput').focus();$('toast').textContent='PICK A USERNAME (3–16 CHARACTERS) BEFORE PLAYING';return false;}return true;}
 function savePlayerName(){const v=$('profileInput').value.trim();if(!/^[A-Za-z0-9_]{3,16}$/.test(v)){$('toast').textContent='USERNAME MUST BE 3–16 CHARACTERS: LETTERS, NUMBERS OR _';return false;}playerName=v;localStorage.grPlayerName=v;updateProfileDisplay();$('toast').textContent='USERNAME SAVED: '+v;snd(700,.1);show(menu);return true;}
@@ -212,11 +218,160 @@ function supabaseReady(){return SUPABASE_URL.startsWith('https://')&&SUPABASE_KE
 async function loadGlobalBoard(){const list=$('scoresList'),status=$('boardStatus');if(!supabaseReady()){list.textContent='Leaderboard is not connected yet.';status.textContent='Add your Supabase Project URL and Publishable key in the game file first.';return}status.textContent='Loading scores…';try{const url=SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/leaderboard?select=username,score,game_mode,survival_seconds,created_at&order=score.desc&limit=10';const res=await fetch(url,{headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY}});if(!res.ok)throw new Error('HTTP '+res.status);const rows=await res.json();list.innerHTML=rows.length?rows.map((v,i)=>`<div class=\"card\">#${i+1} <b>${escapeBoard(v.username||'PLAYER')}</b> · <b>${Number(v.score)||0}</b> points <span style=\"float:right\">${escapeBoard(v.game_mode||'RUN')}</span></div>`).join(''):'<p>No global runs yet. Set the first record!</p>';status.textContent='Global scores · refreshed just now.'}catch(e){list.textContent='Could not load the global leaderboard.';status.textContent='Check your Project URL, Publishable key, table name, and SELECT policy. ('+e.message+')'}}
 function escapeBoard(v){return String(v).replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]))}
 async function submitGlobalScore(){if(!supabaseReady()||rankedMode)return;const payload={username:playerName||'PLAYER',score:Math.max(0,Math.floor(score)),game_mode:freePlay?'FREE PLAY':'BOSS RUN',survival_seconds:Math.max(0,Math.floor(time))};try{const res=await fetch(SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/leaderboard',{method:'POST',headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(payload)});if(!res.ok)throw new Error('HTTP '+res.status);$('boardStatus').textContent='Your score was submitted to the global leaderboard.'}catch(e){console.error('Global score submission failed:',e);$('boardStatus').textContent='Could not submit score: '+e.message}}
+
+const partyHeaders=()=>({apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,'Content-Type':'application/json',Prefer:'return=representation'});
+async function partyRequest(path,options={}){const r=await fetch(SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/party_requests'+path,{...options,headers:{...partyHeaders(),...(options.headers||{})}});if(!r.ok)throw new Error('Party service HTTP '+r.status);return r.status===204?[]:await r.json().catch(()=>[])}
+async function refreshParty(){const box=$('incomingPartyRequests'),members=$('partyMembers'),status=$('partyStatus');if(!supabaseReady()){status.textContent='Supabase is not configured.';return}if(!playerName){status.textContent='Choose a username in PROFILE first.';box.textContent='';return}status.textContent='Checking party requests…';try{const who=encodeURIComponent('eq.'+playerName);const incoming=await partyRequest('?select=id,sender_username,recipient_username,status,created_at&recipient_username='+who+'&status=eq.pending&order=created_at.desc');const accepted=await partyRequest('?select=id,sender_username,recipient_username,status&status=eq.accepted&or=(sender_username.eq.'+encodeURIComponent(playerName)+',recipient_username.eq.'+encodeURIComponent(playerName)+')&order=created_at.desc');box.innerHTML=incoming.length?incoming.map(q=>`<div class="card"><b>${escapeBoard(q.sender_username)}</b> wants to party with you.<br><button data-party-accept="${q.id}">ACCEPT</button><button data-party-decline="${q.id}">DECLINE</button></div>`).join(''):'<div class="card">No incoming requests.</div>';const uniqueFriends=[...new Map(accepted.map(q=>{const friend=q.sender_username===playerName?q.recipient_username:q.sender_username;return [friend.toLowerCase(),friend]})).values()];members.innerHTML=uniqueFriends.length?uniqueFriends.map(friend=>`<div class="card"><b>${escapeBoard(friend)}</b> · FRIEND<br><button data-party-friend="${escapeBoard(friend)}">SELECT FRIEND</button></div>`).join(''):'No accepted party requests yet.';members.querySelectorAll('[data-party-friend]').forEach(b=>b.onclick=()=>{livePartyFriend=b.dataset.partyFriend;status.textContent='Selected '+livePartyFriend+'. Both players should select each other and press JOIN LIVE RUN.'});status.textContent=livePartyFriend?'Selected friend: '+livePartyFriend+'.':'Party requests refreshed.';box.querySelectorAll('[data-party-accept]').forEach(b=>b.onclick=()=>respondParty(b.dataset.partyAccept,'accepted'));box.querySelectorAll('[data-party-decline]').forEach(b=>b.onclick=()=>respondParty(b.dataset.partyDecline,'declined'))}catch(e){status.textContent='Could not load party requests. Run the party setup SQL in Supabase. ('+e.message+')'}}
+async function respondParty(id,status){try{await partyRequest('?id=eq.'+encodeURIComponent(id),{method:'PATCH',body:JSON.stringify({status})});$('partyStatus').textContent=status==='accepted'?'Party request accepted!':'Party request declined.';await refreshParty()}catch(e){$('partyStatus').textContent='Could not update request: '+e.message}}
+async function sendPartyInvite(){const target=$('partyUsername').value.trim();if(!playerName){$('partyStatus').textContent='Choose your username in PROFILE first.';return}if(!/^[A-Za-z0-9_]{3,16}$/.test(target)){$('partyStatus').textContent='Enter a valid username (3–16 letters, numbers or _).';return}if(target.toLowerCase()===playerName.toLowerCase()){$('partyStatus').textContent='You cannot send a party request to yourself.';return}try{await partyRequest('',{method:'POST',body:JSON.stringify({sender_username:playerName,recipient_username:target,status:'pending'})});$('partyStatus').textContent='Party request sent to '+target+'!';$('partyUsername').value=''}catch(e){$('partyStatus').textContent='Could not send request. Check the party table and policies. ('+e.message+')'}}
+function maybeStartLivePartyRun(){
+  if(!liveChannel||!livePartyActive||!liveStartPending)return;
+
+  const state=liveChannel.presenceState();
+  const connected=Object.values(state)
+    .flat()
+    .map(meta=>String(meta.username||'').toLowerCase())
+    .filter(Boolean);
+
+  const me=playerName.toLowerCase();
+  const friend=livePartyFriend.toLowerCase();
+
+  if(connected.includes(me)&&connected.includes(friend)){
+    liveStartPending=false;
+    if(!running){
+      beginRun(true,false);
+      livePartyActive=true;
+      $('toast').textContent='LIVE PARTY RUN · PLAYING WITH '+livePartyFriend.toUpperCase();
+    }
+    $('partyStatus').textContent='Both players connected! Live party run started.';
+  }else{
+    $('partyStatus').textContent='Connected. Waiting for friend... Players seen: '+(connected.join(', ')||'none');
+  }
+}
+
+async function joinLiveParty(){
+  if(!requireUsername())return;
+  if(!livePartyFriend){
+    $('partyStatus').textContent='Select an accepted friend first.';
+    return;
+  }
+  if(!window.supabase?.createClient){
+    $('partyStatus').textContent='Realtime library did not load. Check your internet connection.';
+    return;
+  }
+  if(liveChannel)await leaveLiveParty();
+
+  livePartyRoom='glitch-run-live-'+[playerName.toLowerCase(),livePartyFriend.toLowerCase()].sort().join('-').replace(/[^a-z0-9_-]/g,'');
+  remotePlayer=null;
+  livePartyActive=true;
+  liveStartPending=true;
+  $('partyStatus').textContent='Connecting to '+livePartyFriend+'…';
+
+  const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+  liveChannel=client.channel(livePartyRoom,{
+    config:{
+      broadcast:{self:false},
+      presence:{key:playerName}
+    }
+  });
+
+  liveChannel
+    .on('broadcast',{event:'player'},({payload})=>{
+      if(payload&&payload.username.toLowerCase()!==playerName.toLowerCase()){
+        remotePlayer={...payload,seen:Date.now()};remoteTarget={x:Number(payload.x)||0,y:Number(payload.y)||0};if(!remoteRender)remoteRender={...remoteTarget};
+      }
+    })
+    .on('broadcast',{event:'leave'},({payload})=>{
+      if(payload?.username?.toLowerCase()!==playerName.toLowerCase()){
+        remotePlayer=null;
+        $('toast').textContent='Your friend left the party.';
+      }
+    })
+    .on('broadcast',{event:'world'},({payload})=>{
+      if(!liveIsHost()&&Array.isArray(payload?.orbs)){
+        orbs.length=0;
+        payload.orbs.forEach(o=>orbs.push({id:o.id,x:o.x*W,y:o.y*H,r:7,p:o.p||0}));
+        const present=new Set(payload.orbs.map(o=>String(o.id)));
+        for(const id of [...pendingOrbCollections])if(!present.has(id))pendingOrbCollections.delete(id);
+      }
+    })
+    .on('broadcast',{event:'orb-collect'},({payload})=>{
+      if(liveIsHost()&&payload?.id&&payload.username?.toLowerCase()===livePartyFriend.toLowerCase()){
+        const i=orbs.findIndex(o=>String(o.id)===String(payload.id));
+        if(i>=0){
+          orbs.splice(i,1);
+          liveChannel.send({type:'broadcast',event:'orb-collected',payload:{id:payload.id,collector:payload.username}});
+        }
+      }
+    })
+    .on('broadcast',{event:'orb-collected'},({payload})=>{
+      if(!liveIsHost()&&payload?.id){
+        const i=orbs.findIndex(o=>String(o.id)===String(payload.id));
+        if(i>=0)orbs.splice(i,1);
+        pendingOrbCollections.delete(String(payload.id));
+        if(payload.collector?.toLowerCase()===playerName.toLowerCase()){
+          shards+=1+Math.floor(level('bonus')*.5);streak++;score+=35*(activeAbility==='double'?2:1);
+          pop(p.x,p.y-32,'+1 SHARD','#65f7ff');burst(p.x,p.y,'#65f7ff',14);pickupSound();
+        }
+      }
+    })
+    .on('presence',{event:'sync'},()=>{
+      maybeStartLivePartyRun();
+    });
+
+  await new Promise((resolve,reject)=>{
+    const timeout=setTimeout(()=>{
+      reject(new Error('Realtime connection timed out'));
+    },15000);
+
+    liveChannel.subscribe(async state=>{
+      if(state==='SUBSCRIBED'){
+        clearTimeout(timeout);
+        try{
+          await liveChannel.track({username:playerName});
+          $('partyStatus').textContent='ROOM: '+livePartyRoom+' | Waiting for '+livePartyFriend;
+          maybeStartLivePartyRun();
+          resolve();
+        }catch(error){
+          reject(error);
+        }
+      }else if(state==='CHANNEL_ERROR'||state==='TIMED_OUT'){
+        clearTimeout(timeout);
+        reject(new Error('Realtime '+state));
+      }
+    });
+  });
+}
+
+async function startLivePartyRun(){
+  if(running&&livePartyActive){
+    $('partyStatus').textContent='You are already in a live run!';
+    return;
+  }
+  if(!liveChannel){
+    try{
+      await joinLiveParty();
+    }catch(error){
+      $('partyStatus').textContent='Live connection failed: '+error.message;
+      return;
+    }
+  }
+  liveStartPending=true;
+  maybeStartLivePartyRun();
+}
+async function leaveLiveParty(){if(liveChannel){try{await liveChannel.send({type:'broadcast',event:'leave',payload:{username:playerName}});await liveChannel.unsubscribe()}catch(e){}liveChannel=null}livePartyActive=false;remotePlayer=null;livePartyRoom='';$('partyStatus').textContent='You left the live party.';}
 $('buyReviveUpgrade').onclick=()=>{if(upgradeCoins<500)return;upgradeCoins-=500;reviveTokens++;localStorage.grUpgradeCoins=upgradeCoins;localStorage.grReviveTokens=reviveTokens;snd(760,.12,'triangle');openUpgrades()};
 $('buyReviveSkin').onclick=()=>{if(skinCoins<500)return;skinCoins-=500;reviveTokens++;localStorage.grSkinCoins=skinCoins;localStorage.grReviveTokens=reviveTokens;snd(760,.12,'triangle');openUpgrades()};
 $('reviveNow').onclick=()=>{if(!pendingRevive||reviveTokens<1)return;$('mobileControls').classList.add('active');reviveTokens--;localStorage.grReviveTokens=reviveTokens;pendingRevive=false;running=true;invuln=3;shield=1.5;show(menu);overlay.classList.add('hidden');hud.classList.remove('hidden');abilityHud.classList.remove('hidden');if(rankedMode)$('rankHud').classList.remove('hidden');pop(p.x,p.y-30,'REVIVED!','#ff8bd2');burst(p.x,p.y,'#ff8bd2',28);snd(900,.22,'triangle')};
 $('giveUp').onclick=()=>{pendingRevive=false;finish()};
-$('profileCorner').onclick=()=>{updateProfileDisplay();$('soundSetting').checked=localStorage.grSoundEnabled!=='0';show($('profilePanel'))};$('profileBack').onclick=()=>show(menu);$('soundSetting').onchange=e=>{localStorage.grSoundEnabled=e.target.checked?'1':'0';$('toast').textContent=e.target.checked?'SOUND EFFECTS ON':'SOUND EFFECTS OFF'};$('saveProfile').onclick=savePlayerName;$('bannerShopBtn').onclick=()=>openBannerShop();$('bannerBack').onclick=()=>show($('profilePanel'));$('shopBtn').onclick=openShop;$('upgradeBtn').onclick=openUpgrades;$('boardBtn').onclick=openBoard;$('shopBack').onclick=()=>show(menu);$('upgradeBack').onclick=()=>show(menu);$('boardBack').onclick=()=>show(menu);$('boardRefresh').onclick=loadGlobalBoard;
+$('profileCorner').onclick=()=>{updateProfileDisplay();$('soundSetting').checked=localStorage.grSoundEnabled!=='0';show($('profilePanel'))};$('profileBack').onclick=()=>show(menu);$('soundSetting').onchange=e=>{localStorage.grSoundEnabled=e.target.checked?'1':'0';$('toast').textContent=e.target.checked?'SOUND EFFECTS ON':'SOUND EFFECTS OFF'};$('saveProfile').onclick=savePlayerName;$('bannerShopBtn').onclick=()=>openBannerShop();$('bannerBack').onclick=()=>show($('profilePanel'));$('shopBtn').onclick=openShop;$('upgradeBtn').onclick=openUpgrades;$('boardBtn').onclick=openBoard;$('shopBack').onclick=()=>show(menu);$('upgradeBack').onclick=()=>show(menu);$('boardBack').onclick=()=>show(menu);$('boardRefresh').onclick=loadGlobalBoard;$('partyBtn').onclick=async()=>{show($('partyPanel'));await refreshParty()};$('partyBack').onclick=()=>show(menu);$('partyRefresh').onclick=refreshParty;$('sendPartyRequest').onclick=sendPartyInvite;$('joinLiveParty').onclick=async()=>{
+  $('partyStatus').textContent='JOIN BUTTON CLICKED — starting connection...';
+  try{
+    await startLivePartyRun();
+  }catch(error){
+    $('partyStatus').textContent='JOIN ERROR: '+error.message;
+  }
+};$('leaveLiveParty').onclick=leaveLiveParty;$('partyUsername').addEventListener('keydown',e=>{if(e.key==='Enter')sendPartyInvite()});
 $('mapSelect').onchange=e=>{map=+e.target.value};$('skinSelect').onchange=e=>{skin=e.target.value;localStorage.grSkin=skin};
 $('start').onclick=()=>{if(requireUsername())start()};$('rankedStart').onclick=()=>{if(requireUsername())startRanked()};$('again').onclick=()=>rankedMode?startRanked():start();$('home').onclick=()=>{show(menu);updateSelectors();refreshFreePlayButton()};$('menuFreePlay').onclick=()=>{if(requireUsername())startFreePlay()};$('victoryFreePlay').onclick=()=>{if(requireUsername())startFreePlay()};$('victoryHome').onclick=()=>{show(menu);updateSelectors();refreshFreePlayButton()};
 function spawnOrb(){
@@ -224,7 +379,7 @@ function spawnOrb(){
   const margin = 45;
   const ox = rand(margin, Math.max(margin + 1, W - margin));
   const oy = rand(margin, Math.max(margin + 1, H - margin));
-  orbs.push({x:ox,y:oy,r:7,p:rand(0,6.28)});
+  orbs.push({id:++orbSerial,x:ox,y:oy,r:7,p:rand(0,6.28)});
 }
 function spawnAbility(){
  const margin=65,def=abilityTypes[Math.floor(Math.random()*abilityTypes.length)];
@@ -302,7 +457,7 @@ function bossAttack(){
  if(boss.phase===3&&n>=5){for(let j=0;j<8+(n-5)*2;j++)addBullet(j*Math.PI/(4+(n-5))+boss.age*.7,175+n*7,6);}
  snd(180-n*5,.08,'square',.025);
 }
-function beginRun(isFreePlay,isRanked=false){$('mobileControls').classList.add('active');freePlay=isFreePlay;rankedMode=isRanked;score=0;time=0;shards=0;streak=0;boss=null;bossesDefeated=0;nextBossAt=isFreePlay?Infinity:35;bossHitCooldown=0;bossHud.classList.add('hidden');dash=0;shield=0;dashCD=0;shieldCD=0;jumpTime=0;jumpCD=0;invuln=0;abilityPickup=null;abilitySpawnTimer=rand(30,45);activeAbility='';activeAbilityTime=0;lives=level('life');enemies.length=orbs.length=particles.length=texts.length=0;p.x=W/2;p.y=H/2;p.trail=[];running=true;hud.classList.remove('hidden');abilityHud.classList.remove('hidden');$('rankHud').classList.toggle('hidden',!rankedMode);$('maplabel').textContent=maps[map].name+(rankedMode?' · RANKED':isFreePlay?' · FREE PLAY':'');show(menu);overlay.classList.add('hidden');$('toast').textContent=rankedMode?'🏅 RANKED FREE PLAY · NO BOSSES · SURVIVE TO RANK UP':isFreePlay?'♾️ FREE PLAY · ENDLESS SURVIVAL · NO BOSSES':'CYAN SHARDS PAY BOTH WALLETS · DEFEAT ALL 10 BOSSES';snd(440,.14)}
+function beginRun(isFreePlay,isRanked=false){$('mobileControls').classList.add('active');freePlay=isFreePlay;rankedMode=isRanked;score=0;time=0;shards=0;streak=0;boss=null;bossesDefeated=0;nextBossAt=isFreePlay?Infinity:35;bossHitCooldown=0;bossHud.classList.add('hidden');dash=0;shield=0;dashCD=0;shieldCD=0;jumpTime=0;jumpCD=0;invuln=0;abilityPickup=null;abilitySpawnTimer=rand(30,45);activeAbility='';activeAbilityTime=0;lives=level('life');enemies.length=orbs.length=particles.length=texts.length=0;pendingOrbCollections.clear();lastWorldSend=0;p.x=W/2;p.y=H/2;p.trail=[];running=true;hud.classList.remove('hidden');abilityHud.classList.remove('hidden');$('rankHud').classList.toggle('hidden',!rankedMode);$('maplabel').textContent=maps[map].name+(rankedMode?' · RANKED':isFreePlay?' · FREE PLAY':'');show(menu);overlay.classList.add('hidden');$('toast').textContent=rankedMode?'🏅 RANKED FREE PLAY · NO BOSSES · SURVIVE TO RANK UP':isFreePlay?'♾️ FREE PLAY · ENDLESS SURVIVAL · NO BOSSES':'CYAN SHARDS PAY BOTH WALLETS · DEFEAT ALL 10 BOSSES';snd(440,.14)}
 function start(){if(requireUsername())beginRun(false)}
 function startFreePlay(){if(requireUsername()&&localStorage.grFreePlayUnlocked==='1')beginRun(true)}
 function startRanked(){if(requireUsername())beginRun(true,true)}
@@ -314,19 +469,24 @@ function activateShield(){if(!running||shieldCD>0)return;shield=2.2+level('shiel
 function activateJump(){if(!running||jumpTime>0||jumpCD>0)return;jumpTime=activeAbility==='hyperjump'?1.15:.68;jumpCD=activeAbility==='hyperjump'?1.5:3;snd(520,.12,'triangle',.035);burst(p.x,p.y,'#8afaff',8);pop(p.x,p.y-28,'HOP!','#8afaff')}
 window.addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();if(e.code==='ShiftLeft'&&!e.repeat)activateDash();if(e.key.toLowerCase()==='e')activateShield();if(e.code==='Space'&&!e.repeat)activateJump();if((e.key==='Enter')&&!running&&over.classList.contains('hidden'))start()});
 window.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
-// Large touch buttons mirror the keyboard abilities. Movement is controlled by dragging on the playfield.
+// Touch abilities plus a floating joystick that appears wherever the player touches the playfield.
 for(const [id,action] of [['mobileDash',activateDash],['mobileJump',activateJump],['mobileShield',activateShield]]){const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();action()});b.addEventListener('contextmenu',e=>e.preventDefault())}
-function pointerPos(e){let r=c.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}c.addEventListener('pointerdown',e=>{pointer=pointerPos(e);c.setPointerCapture(e.pointerId)});c.addEventListener('pointermove',e=>{if(pointer)pointer=pointerPos(e)});c.addEventListener('pointerup',()=>pointer=null);c.addEventListener('pointercancel',()=>pointer=null);
+function pointerPos(e){const r=c.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+function updateJoystick(e){if(!joystick||e.pointerId!==joystick.id)return;const pos=pointerPos(e),dx=pos.x-joystick.x,dy=pos.y-joystick.y,d=Math.hypot(dx,dy),scale=d>joystickRadius?joystickRadius/d:1;joystick.knobX=joystick.x+dx*scale;joystick.knobY=joystick.y+dy*scale}
+c.addEventListener('pointerdown',e=>{if(!running||joystick)return;e.preventDefault();const pos=pointerPos(e);joystick={id:e.pointerId,x:pos.x,y:pos.y,knobX:pos.x,knobY:pos.y};c.setPointerCapture(e.pointerId)});
+c.addEventListener('pointermove',updateJoystick);
+function endJoystick(e){if(joystick&&e.pointerId===joystick.id)joystick=null}
+c.addEventListener('pointerup',endJoystick);c.addEventListener('pointercancel',endJoystick);c.addEventListener('lostpointercapture',endJoystick);
 function update(dt){time+=dt;if(rankedMode){const r=rankFor(time);$('rankName').textContent=r.name;$('rankTime').textContent=clock(time)+' SURVIVED';}jumpTime=Math.max(0,jumpTime-dt);jumpCD=Math.max(0,jumpCD-dt);dash=Math.max(0,dash-dt);shield=Math.max(0,shield-dt);dashCD=Math.max(0,dashCD-dt);shieldCD=Math.max(0,shieldCD-dt);invuln=Math.max(0,invuln-dt);
-let ax=(keys.d||keys.arrowright?1:0)-(keys.a||keys.arrowleft?1:0),ay=(keys.s||keys.arrowdown?1:0)-(keys.w||keys.arrowup?1:0);if(pointer){let dx=pointer.x-p.x,dy=pointer.y-p.y,d=Math.hypot(dx,dy);ax=d>5?dx/d:0;ay=d>5?dy/d:0}let mag=Math.hypot(ax,ay)||1;let abilitySpeed=activeAbility==='overdrive'?1.45:1;let moveSpeed=p.speed*(1+level('speed')*.035)*abilitySpeed;p.x+=ax/mag*moveSpeed*(dash?2.7:1)*dt;p.y+=ay/mag*p.speed*(1+level('speed')*.035)*abilitySpeed*(dash?2.7:1)*dt;p.x=Math.max(p.r,Math.min(W-p.r,p.x));p.y=Math.max(p.r,Math.min(H-p.r,p.y));p.trail.push({x:p.x,y:p.y});if(p.trail.length>14)p.trail.shift();
+let ax=(keys.d||keys.arrowright?1:0)-(keys.a||keys.arrowleft?1:0),ay=(keys.s||keys.arrowdown?1:0)-(keys.w||keys.arrowup?1:0);if(joystick){const dx=joystick.knobX-joystick.x,dy=joystick.knobY-joystick.y;ax=dx/joystickRadius;ay=dy/joystickRadius;const strength=Math.min(1,Math.hypot(ax,ay));if(strength<.12){ax=0;ay=0}else{const angle=Math.atan2(ay,ax);ax=Math.cos(angle)*strength;ay=Math.sin(angle)*strength}}let mag=Math.hypot(ax,ay)||1;let abilitySpeed=activeAbility==='overdrive'?1.45:1;let moveSpeed=p.speed*(1+level('speed')*.035)*abilitySpeed;p.x+=ax/mag*moveSpeed*(dash?2.7:1)*dt;p.y+=ay/mag*p.speed*(1+level('speed')*.035)*abilitySpeed*(dash?2.7:1)*dt;p.x=Math.max(p.r,Math.min(W-p.r,p.x));p.y=Math.max(p.r,Math.min(H-p.r,p.y));p.trail.push({x:p.x,y:p.y});if(p.trail.length>14)p.trail.shift();
 if(Math.hypot(ax,ay)>.05){facingX=ax/mag;facingY=ay/mag}
 activeAbilityTime=Math.max(0,activeAbilityTime-dt);
 if(activeAbilityTime<=0&&activeAbility){pop(p.x,p.y-28,activeAbility.toUpperCase()+' ENDED','#b7c5d8');activeAbility=''}
 abilitySpawnTimer-=dt;
 if(!abilityPickup&&abilitySpawnTimer<=0){spawnAbility();abilitySpawnTimer=rand(45,60)}
 if(abilityPickup){abilityPickup.p+=dt*3;abilityPickup.life-=dt;if(abilityPickup.life<=0){abilityPickup=null}else if(Math.hypot(p.x-abilityPickup.x,p.y-abilityPickup.y)<p.r+abilityPickup.r+5){const got=abilityPickup.def;abilityPickup=null;activeAbility=got.id;activeAbilityTime=30;pop(p.x,p.y-34,got.name+' · 30s',got.color);burst(p.x,p.y,got.color,22);snd(760,.2,'triangle',.04)}}
-if(Math.random()<dt*(1.05+level('luck')*.12)*(activeAbility==='shardrain'?2.2:1))spawnOrb();if(Math.random()<dt*Math.min(.45,.12+time*.008))spawnEnemy();
-for(let i=orbs.length-1;i>=0;i--){let o=orbs[i];o.p+=dt*4;let od=Math.hypot(p.x-o.x,p.y-o.y);let magnetRange=activeAbility==='magnet'?Math.max(260,level('magnet')*13):level('magnet')*13;if(magnetRange>0&&od<magnetRange+35){let pull=Math.min(1,dt*(2+level('magnet')*.45));o.x+=(p.x-o.x)*pull;o.y+=(p.y-o.y)*pull}if(Math.hypot(p.x-o.x,p.y-o.y)<p.r+o.r+3){orbs.splice(i,1);shards+=1+Math.floor(level('bonus')*.5);streak++;score+=35*(activeAbility==='double'?2:1);pop(p.x,p.y-32,'+1 SHARD','#65f7ff');burst(o.x,o.y,'#65f7ff',14);pop(o.x,o.y-10,'+35','#65f7ff');pickupSound()}}
+if((!livePartyActive||liveIsHost())&&Math.random()<dt*(1.05+level('luck')*.12)*(activeAbility==='shardrain'?2.2:1))spawnOrb();if(Math.random()<dt*Math.min(.45,.12+time*.008))spawnEnemy();
+for(let i=orbs.length-1;i>=0;i--){let o=orbs[i];o.p+=dt*4;let od=Math.hypot(p.x-o.x,p.y-o.y);if(!livePartyActive||liveIsHost()){let magnetRange=activeAbility==='magnet'?Math.max(260,level('magnet')*13):level('magnet')*13;if(magnetRange>0&&od<magnetRange+35){let pull=Math.min(1,dt*(2+level('magnet')*.45));o.x+=(p.x-o.x)*pull;o.y+=(p.y-o.y)*pull}if(od<p.r+o.r+3){orbs.splice(i,1);shards+=1+Math.floor(level('bonus')*.5);streak++;score+=35*(activeAbility==='double'?2:1);pop(p.x,p.y-32,'+1 SHARD','#65f7ff');burst(o.x,o.y,'#65f7ff',14);pop(o.x,o.y-10,'+35','#65f7ff');pickupSound()}}else if(od<p.r+o.r+3&&!pendingOrbCollections.has(String(o.id))){pendingOrbCollections.add(String(o.id));liveChannel.send({type:'broadcast',event:'orb-collect',payload:{id:o.id,username:playerName}})}}
 
 if(!freePlay&&!boss&&time>=nextBossAt)spawnBoss();
 
@@ -429,7 +589,9 @@ if(boss){
 if(abilityPickup){const a=abilityPickup,def=a.def;x.save();x.translate(a.x,a.y);x.rotate(Math.sin(a.p)*.18);x.shadowBlur=24;x.shadowColor=def.color;x.fillStyle=def.color;x.beginPath();x.arc(0,0,a.r+Math.sin(a.p*2)*2,0,Math.PI*2);x.fill();x.shadowBlur=0;x.fillStyle='#07101d';x.font='bold 13px system-ui';x.textAlign='center';x.textBaseline='middle';x.fillText(def.icon,0,1);x.restore();x.fillStyle=def.color;x.font='bold 9px system-ui';x.textAlign='center';x.fillText('ABILITY',a.x,a.y-22)}
 for(let i=0;i<p.trail.length;i++){let t=p.trail[i],a=(i+1)/p.trail.length;x.globalAlpha=a*.22;x.fillStyle=color();x.beginPath();x.arc(t.x,t.y,p.r*a,0,7);x.fill()}x.globalAlpha=1;
 if(running){x.save();if((shield>0&&(shield>.7||Math.floor(time*18)%2===0))||activeAbility==='guardian'||activeAbility==='phase'){x.strokeStyle=activeAbility==='guardian'?'#fff0a0':activeAbility==='phase'?'#b9a0ff':'#65f7ff';x.lineWidth=3;x.shadowBlur=25;x.shadowColor=x.strokeStyle;x.beginPath();x.arc(p.x,p.y,22+Math.sin(time*12)*2,0,7);x.stroke()}const hop=jumpTime>0?Math.sin((1-jumpTime/(activeAbility==='hyperjump'?1.15:.68))*Math.PI)*30:0; if(jumpTime>0){x.globalAlpha=.32;x.fillStyle='#65f7ff';x.beginPath();x.ellipse(p.x,p.y+5,14,5,0,0,7);x.fill();x.globalAlpha=1}x.globalAlpha=invuln>0&&Math.floor(time*20)%2===0?.3:1;x.shadowBlur=25;x.shadowColor=color();x.fillStyle='#f5ffff';x.beginPath();x.arc(p.x,p.y-hop,p.r,0,7);x.fill();x.strokeStyle=jumpTime>0?'#ffffff':color();x.lineWidth=3;x.beginPath();x.arc(p.x,p.y-hop,p.r+4,0,7);x.stroke();x.restore()}
+if(remotePlayer&&livePartyActive){x.save();const rx=Math.max(12,Math.min(W-12,remoteRender?remoteRender.x:Number(remotePlayer.x)||W/2)),ry=Math.max(12,Math.min(H-12,remoteRender?remoteRender.y:Number(remotePlayer.y)||H/2));x.shadowBlur=25;x.shadowColor=remotePlayer.skinColor||'#ff8bd2';x.fillStyle='#fff';x.beginPath();x.arc(rx,ry,11,0,Math.PI*2);x.fill();x.strokeStyle=remotePlayer.skinColor||'#ff8bd2';x.lineWidth=4;x.beginPath();x.arc(rx,ry,15,0,Math.PI*2);x.stroke();x.shadowBlur=0;x.fillStyle='#fff';x.font='bold 11px system-ui';x.textAlign='center';x.fillText(String(remotePlayer.username||'FRIEND').toUpperCase(),rx,ry-23);x.fillStyle='#91a7bd';x.font='10px system-ui';x.fillText('SCORE '+(Number(remotePlayer.score)||0),rx,ry+29);x.restore()}
+if(joystick){x.save();x.globalAlpha=.78;x.lineWidth=2;x.strokeStyle='#65f7ff';x.fillStyle='#65f7ff18';x.beginPath();x.arc(joystick.x,joystick.y,joystickRadius,0,Math.PI*2);x.fill();x.stroke();x.globalAlpha=.95;x.fillStyle='#65f7ff55';x.strokeStyle='#dfffff';x.beginPath();x.arc(joystick.knobX,joystick.knobY,20,0,Math.PI*2);x.fill();x.stroke();x.restore()}
 for(let a of particles){x.globalAlpha=Math.max(0,a.life/a.max);x.fillStyle=a.col;x.beginPath();x.arc(a.x,a.y,a.r,0,7);x.fill()}x.globalAlpha=1;for(let t of texts){x.globalAlpha=Math.max(0,t.life);x.fillStyle=t.col;x.font='bold 14px system-ui';x.textAlign='center';x.fillText(t.str,t.x,t.y)}x.globalAlpha=1}
-function loop(t){let dt=Math.min((t-last)/1000||0,.033);last=t;if(running)update(dt);draw();requestAnimationFrame(loop)}updateSelectors();refreshFreePlayButton();refreshRankRecord();updateProfileDisplay();if(!playerName)show($('profilePanel'));$('best').textContent=best;requestAnimationFrame(loop);
+function loop(t){let dt=Math.min((t-last)/1000||0,.033);last=t;if(running)update(dt);if(remoteTarget&&remoteRender){const smooth=1-Math.exp(-dt*14);remoteRender.x+=(remoteTarget.x-remoteRender.x)*smooth;remoteRender.y+=(remoteTarget.y-remoteRender.y)*smooth;}if(liveChannel&&livePartyActive&&running&&t-lastLiveSend>66){lastLiveSend=t;liveChannel.send({type:'broadcast',event:'player',payload:{username:playerName,x:p.x,y:p.y,score,time,skinColor:color(),map}})}if(liveChannel&&livePartyActive&&running&&liveIsHost()&&t-lastWorldSend>100){lastWorldSend=t;liveChannel.send({type:'broadcast',event:'world',payload:{orbs:orbs.map(o=>({id:o.id,x:o.x/W,y:o.y/H,p:o.p}))}})}if(remotePlayer&&Date.now()-remotePlayer.seen>3500)remotePlayer=null;draw();requestAnimationFrame(loop)}window.addEventListener('beforeunload',()=>{if(liveChannel)liveChannel.send({type:'broadcast',event:'leave',payload:{username:playerName}})});updateSelectors();refreshFreePlayButton();refreshRankRecord();updateProfileDisplay();if(!playerName)show($('profilePanel'));$('best').textContent=best;requestAnimationFrame(loop);
 })();
 </script></body></html>
